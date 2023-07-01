@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import getStockSummary from "@/lib/getStockSummary";
 import getChartData from "@/lib/getChartData";
 import StockGraph from "./components/StockGraph";
-
+import WatchlistButton from "./components/WatchlistButton";
 import getNews from "@/lib/getNews";
 import Image from "next/image";
 import TopNavbar from "@/app/components/TopNavbar";
+import { useSession } from "next-auth/react";
 
 type Params = {
 	params: {
@@ -339,7 +340,7 @@ export default async function Stock({ params: { ticker } }: Params) {
 
 	return (
 		<>
-			<TopNavbar />
+			{/* <TopNavbar /> */}
 
 			<div className="min-h-screen bg-gray-50  ">
 				<div className="px-10 ">
@@ -348,7 +349,11 @@ export default async function Stock({ params: { ticker } }: Params) {
 							<h1 className="text-2xl text-black-400 dark:text-gray-500 font-extrabold  ">
 								{stockData.price.shortName} ({ticker.toUpperCase()})
 							</h1>
-
+							{/* add to watchlist button */}
+							<WatchlistButton
+								ticker={ticker.toUpperCase()}
+								fullName={stockData.price.shortName}
+							/>
 							<br />
 
 							<div className="flex items-center">

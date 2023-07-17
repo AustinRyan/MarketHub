@@ -7,6 +7,7 @@ import getCryptoNews from "../../lib/getCryptoNews";
 import Search from "./Search";
 import Image from "next/image";
 import Link from "next/link";
+import BugNotification from "./BugNotification";
 
 type Mover = {
 	name: string;
@@ -265,6 +266,7 @@ export default async function Hero() {
 
 	return (
 		<>
+			<BugNotification />
 			<div className="min-h-screen bg-gray-50">
 				<div className="px-10 ">
 					<div className="p-4  rounded-lg dark:border-gray-700">

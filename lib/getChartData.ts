@@ -1,7 +1,7 @@
 import Bottleneck from "bottleneck";
 
 const limiter = new Bottleneck({
-	minTime: 2000,
+	minTime: 100,
 });
 
 export default async function getChartData(ticker: string) {

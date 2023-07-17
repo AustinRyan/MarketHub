@@ -5,7 +5,7 @@ import Bottleneck from "bottleneck";
 
 // Create a new limiter that allows 1 request per 1000ms (1 second)
 const limiter = new Bottleneck({
-	minTime: 2000,
+	minTime: 100,
 });
 
 const fetcherWithHeaders = (headers: any) => (url: string) => 

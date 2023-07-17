@@ -1,8 +1,7 @@
 import Bottleneck from "bottleneck";
 
-// Create a new limiter that allows 1 request per 1000ms (1 second)
 const limiter = new Bottleneck({
-	minTime: 1000,
+	minTime: 2000,
 });
 
 export default async function getStockSummary(ticker: string) {
@@ -24,7 +23,7 @@ export default async function getStockSummary(ticker: string) {
 				"X-RapidAPI-Host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
 			},
 			next: {
-				revalidate: 0,
+				revalidate: 60,
 			},
 		};
 

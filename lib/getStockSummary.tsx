@@ -24,7 +24,7 @@ export default async function getStockSummary(ticker: string) {
 				"X-RapidAPI-Host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
 			},
 			next: {
-				revalidate: 30,
+				revalidate: 0,
 			},
 		};
 

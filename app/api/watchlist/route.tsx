@@ -26,12 +26,16 @@ export async function POST(request: Request) {
 				email,
 				ticker,
 				stockFullName: name,
+				user: {
+					connect: {
+						email: email,
+					},
+				},
 			},
 		});
 
 		return NextResponse.json(stock);
 	} catch (error) {
-		console.error("Error in watchlist route:", error);
 		return new NextResponse("Internal server error", { status: 500 });
 	}
 }

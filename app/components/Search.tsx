@@ -2,7 +2,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import useSearchSuggestions from "@/lib/getSearchSuggestions";
-import _ from "lodash"; // Import lodash
+import _ from "lodash";
 
 type SearchResults = {
 	shortname: string;
@@ -13,7 +13,7 @@ interface SearchProps {
 }
 const Search: React.FC<SearchProps> = ({ isNav = false }) => {
 	const router = useRouter();
-
+	const [isFocused, setIsFocused] = useState(false);
 	const [searchValue, setSearchValue] = useState("");
 	const [debouncedValue, setDebouncedValue] = useState(searchValue);
 
@@ -33,13 +33,22 @@ const Search: React.FC<SearchProps> = ({ isNav = false }) => {
 	const results = data?.quotes?.slice(0, 5);
 
 	const handleSearchValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setSearchValue(e.target.value); // Update the search value immediately when user types
+		setSearchValue(e.target.value);
 		// console.log("searchValue: ", searchValue);
 		// console.log("debouncedValue: ", debouncedValue);
 	};
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		router.push(`/stocks/${searchValue}`);
+	};
+	const handleOnBlur = () => {
+		setTimeout(() => {
+			setIsFocused(false);
+		}, 100);
+	};
+
+	const handleOnFocus = () => {
+		setIsFocused(true);
 	};
 
 	return (
@@ -72,14 +81,15 @@ const Search: React.FC<SearchProps> = ({ isNav = false }) => {
 				</div>
 				<input
 					type="text"
-					id="simple-search"
 					className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 					placeholder="Search"
 					value={searchValue}
 					onChange={(e) => handleSearchValue(e)}
+					onBlur={handleOnBlur}
+					onFocus={handleOnFocus}
 					required
 				/>
-				{results && (
+				{results && isFocused && (
 					<div className="absolute bg-white w-full">
 						<ul>
 							{results.map((result: SearchResults, index: number) => (

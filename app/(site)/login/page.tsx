@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { signIn, useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function Login() {
 	const [data, setData] = useState({ email: "", password: "" });
@@ -15,7 +16,7 @@ export default function Login() {
 				router.push("/");
 			}, 2000);
 		}
-	}, [session]);
+	}, [session, router]);
 	const loginUser = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		signIn("credentials", { ...data, redirect: false }).then((res) => {

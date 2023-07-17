@@ -10,7 +10,6 @@ const options: RequestInit = {
 		"X-RapidAPI-Key": rapidApiKey,
 		"X-RapidAPI-Host": "ms-finance.p.rapidapi.com",
 	},
-	//TODO uncomment this before deploying. Keep commented now to avoid hitting the API limit
 	next: {
 		revalidate: 60,
 	},

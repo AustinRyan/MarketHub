@@ -5,7 +5,7 @@ import useSWR from 'swr';
 const fetcherWithHeaders = (headers: any) => (url: string) => axios.get(url, { headers })
   .then(response => response.data)
   .catch(error => {
-    console.error(error);  // log the original error
+    console.error(error);  
     throw new Error('Failed to fetch chart data');
   });
 

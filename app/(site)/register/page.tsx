@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { set } from "lodash";
+import Image from "next/image";
 
 export default function Register() {
 	const [data, setData] = useState({ name: "", email: "", password: "" });
@@ -17,7 +18,7 @@ export default function Register() {
 				router.push("/");
 			}, 2000);
 		}
-	}, [session]);
+	}, [session, router]);
 
 	const registerUser = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -25,7 +26,7 @@ export default function Register() {
 			.post("/api/register", data)
 			.then(() => toast.success("Account created successfully!"))
 			.catch((err) => {
-				toast.error("Something went wrong ");
+				toast.error("Something went wrong " + err);
 			});
 	};
 	return (

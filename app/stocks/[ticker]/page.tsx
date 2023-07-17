@@ -235,14 +235,6 @@ const renderNews = async (ticker: string) => {
 							[Read more]
 						</a>
 					</p>
-					{/* <p>
-						<Image
-							src={article.article_photo_url}
-							alt={article.article_title}
-							width={200}
-							height={200}
-						/>
-					</p> */}
 					<p>Source: {article.source}</p>
 					<p>Date: {article.post_time_utc}</p>
 					<div className="border-b border-gray-400"></div>
@@ -349,7 +341,6 @@ export default async function Stock({ params: { ticker } }: Params) {
 							<h1 className="text-2xl text-black-400 dark:text-gray-500 font-extrabold  ">
 								{stockData.price.shortName} ({ticker.toUpperCase()})
 							</h1>
-							{/* add to watchlist button */}
 							<WatchlistButton
 								ticker={ticker.toUpperCase()}
 								fullName={stockData.price.shortName}

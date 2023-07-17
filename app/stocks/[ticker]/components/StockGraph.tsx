@@ -13,7 +13,6 @@ import { Suspense } from "react";
 import useChartData from "@/lib/getChartDataClient";
 
 // The function below will prevent the changing of interval and ranges if they are changed too quickly
-// In our case we hasve it set at 300 milliseconds
 function debounce<F extends (...args: any[]) => any>(
 	func: F,
 	wait: number
@@ -39,7 +38,6 @@ type RangeKeys =
 	| "10y"
 	| "ytd"
 	| "max";
-// defining the ranges
 const ranges: Record<RangeKeys, string[]> = {
 	"1d": ["1m", "2m", "5m", "15m", "30m", "60m"],
 	"5d": ["1m", "2m", "5m", "15m", "30m", "60m", "90m", "1h", "1d"],
@@ -71,6 +69,8 @@ export default function StockGraph({ ticker }: { ticker: string }) {
 	const { data, isLoading, isError } = useChartData(ticker, interval, range);
 
 	// Extract data if not loading and no error
+
+	// TODO - refactor this nested if statements
 	let historical, dates, closingPrices: any[], data2;
 	if (!isLoading && !isError && data) {
 		if (data.chart) {
@@ -81,7 +81,7 @@ export default function StockGraph({ ticker }: { ticker: string }) {
 					if (historical) {
 						closingPrices = historical.close;
 						data2 = dates.map((date: any, index: number) => ({
-							date: new Date(date * 1000)?.toLocaleDateString(), // assuming timestamp is in seconds
+							date: new Date(date * 1000)?.toLocaleDateString(),
 							price: Number(closingPrices[index]?.toFixed(2)),
 						}));
 					}
@@ -166,11 +166,9 @@ export default function StockGraph({ ticker }: { ticker: string }) {
 			// Get a compatible interval for the selected range
 			const newInterval = getCompatibleInterval(value as RangeKeys);
 
-			// Update the interval state
 			setInterval(newInterval);
 		}
 
-		// Update the range state
 		setRange(value);
 
 		setIsOpen(false);
@@ -274,7 +272,6 @@ export default function StockGraph({ ticker }: { ticker: string }) {
 						</ul>
 					)}
 				</div>
-				{/* Add a spinner, or skeleton to display when loading  */}
 				{isLoading ? (
 					<div className=" flex items-center justify-center">
 						<progress className="progress w-96 mt-10"></progress>

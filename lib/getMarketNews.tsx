@@ -12,6 +12,9 @@ export default async function getMarketNews() {
 			"X-RapidAPI-Host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
 		},
 		body: "",
+		next: {
+			revalidate: 60,
+		},
 	};
 
 	const url =

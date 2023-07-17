@@ -1,10 +1,13 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Search from "./Search";
 import { useSession } from "next-auth/react";
-
+interface Stock {
+	ticker: string;
+	stockFullName: string;
+}
 export default function TopNavbar() {
 	const [search, setSearch] = useState(" ");
 	const handleSearch = (value: string) => {
@@ -12,6 +15,26 @@ export default function TopNavbar() {
 		console.log(search);
 	};
 	const session = useSession();
+	const [stocks, setStocks] = useState<Stock[]>([]);
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			if (session?.status === "authenticated") {
+				fetch("/api/get-watchlist", {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+						"User-Email": session.data.user.email,
+					},
+				})
+					.then((response) => response.json())
+					.then((data) => setStocks(data))
+					.catch((error) => console.error("Error:", error));
+			}
+		}, 2000); // fetch every 5 seconds
+
+		return () => clearInterval(interval); // cleanup on unmount
+	}, [session]);
 
 	return (
 		<div className="navbar bg-base-200 flex justify-center ">
@@ -40,12 +63,18 @@ export default function TopNavbar() {
 							tabIndex={0}
 							className="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4"
 						>
-							<li>
-								<a>Item 1</a>
-							</li>
-							<li>
-								<a>Item 2</a>
-							</li>
+							{}
+							{stocks ? (
+								stocks?.map((stock, index) => (
+									<li key={index}>
+										<a>{stock.ticker}</a>
+									</li>
+								))
+							) : (
+								<li>
+									<a>No items in watchlist or loading</a>
+								</li>
+							)}
 						</ul>
 					</div>
 				)}

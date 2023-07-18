@@ -31,7 +31,7 @@ export default function TopNavbar() {
 					.then((data) => setStocks(data))
 					.catch((error) => console.error("Error:", error));
 			}
-		}, 2000); // fetch every 5 seconds
+		}, 2000);
 
 		return () => clearInterval(interval); // cleanup on unmount
 	}, [session]);
@@ -61,18 +61,18 @@ export default function TopNavbar() {
 						</label>
 						<ul
 							tabIndex={0}
-							className="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4"
+							className="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4 "
 						>
 							{}
-							{stocks ? (
+							{stocks.length > 0 ? (
 								stocks?.map((stock, index) => (
 									<li key={index}>
-										<a>{stock.ticker}</a>
+										<Link href={`/stocks/${stock.ticker}`}>{stock.ticker}</Link>
 									</li>
 								))
 							) : (
 								<li>
-									<a>No items in watchlist or loading</a>
+									<a>No items in watchlist</a>
 								</li>
 							)}
 						</ul>

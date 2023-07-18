@@ -71,7 +71,7 @@ export default async function Hero() {
 	const renderMainSection = () => {
 		return (
 			<div className="grid grid-col gap-4 mb-4 min-h-1/2">
-				<div className="flex items-center justify-center rounded bg-gray-50 dark:bg-gray-800">
+				<div className="flex items-center justify-center rounded bg-base-100 ">
 					<div className="hero">
 						<div className="hero-content text-center">
 							<div className=" max-w-lg ">
@@ -111,16 +111,16 @@ export default async function Hero() {
 	async function renderTrendingAndNews(gainer: Mover[], loser: Mover[]) {
 		return (
 			<div className="grid grid-cols-2 gap-4 mb-4">
-				<div className="flex flex-col items-center justify-center rounded bg-gray-50 min-h-28 dark:bg-gray-800 p-2">
-					<p className="text-2xl font-bold font-mono text-black dark:text-gray-500 ">
+				<div className="flex flex-col items-center justify-center rounded bg-base-100 min-h-28 dark:bg-gray-800 p-2">
+					<p className="text-2xl font-bold font-mono text-gray-500  ">
 						Top Gainers 🔥
 					</p>
 					<div className=" w-full">{await renderTables(gainer, false)}</div>
 					<hr className="border-t  w-screen border-gray-500" />
 				</div>
 
-				<div className="flex flex-col items-center justify-center rounded bg-gray-50 min-h-28 dark:bg-gray-800 p-2">
-					<p className="text-2xl font-bold font-mono text-black dark:text-gray-500">
+				<div className="flex flex-col items-center justify-center rounded bg-base-100 min-h-28 dark:bg-gray-800 p-2">
+					<p className="text-2xl font-bold font-mono text-gray-500 ">
 						Top Losers 🥶
 					</p>
 
@@ -128,18 +128,18 @@ export default async function Hero() {
 					<hr className="border-t  w-screen border-gray-500" />
 				</div>
 
-				<div className="flex justify-center rounded bg-gray-50 h-60 dark:bg-gray-800 flex-grow min-h-screen  overflow-y-auto">
+				<div className="flex justify-center rounded bg-base-100 h-60 dark:bg-gray-800 flex-grow min-h-screen  overflow-y-auto">
 					<div className="w-full ">
-						<p className="text-2xl font-bold font-mono text-black dark:text-gray-500 mb-2  text-center p-2">
+						<p className="text-2xl font-bold font-mono text-gray-500 mb-2  text-center p-2">
 							Market News
 						</p>
 						{await renderNews()}
 					</div>
 				</div>
 
-				<div className="flex justify-center rounded bg-gray-50 h-60 dark:bg-gray-800 flex-grow min-h-screen  overflow-y-auto">
+				<div className="flex justify-center rounded bg-base-100 h-60 dark:bg-gray-800 flex-grow min-h-screen  overflow-y-auto">
 					<div className="w-full">
-						<p className="text-2xl font-bold font-mono text-black dark:text-gray-500 mb-2  text-center p-2">
+						<p className="text-2xl font-bold font-mono text-gray-500 mb-2  text-center p-2">
 							Crypto News
 						</p>
 						{await renderCryptoNews()}
@@ -161,7 +161,7 @@ export default async function Hero() {
 					(item: CryptoNewsItem, index: number) => (
 						<div
 							key={index}
-							className="bg-base-200 dark:bg-gray-800 p-4 rounded shadow "
+							className="bg-base-300  p-4 rounded shadow "
 						>
 							<a
 								href={
@@ -234,7 +234,7 @@ export default async function Hero() {
 				{news.map((item: NewsItem, index: number) => (
 					<div
 						key={index}
-						className="bg-base-200 dark:bg-gray-800 p-4 rounded shadow "
+						className="bg-base-300 dark:bg-gray-800 p-4 rounded shadow "
 					>
 						<a
 							href={
@@ -267,7 +267,7 @@ export default async function Hero() {
 	return (
 		<>
 			<BugNotification />
-			<div className="min-h-screen bg-gray-50">
+			<div className="min-h-screen bg-base-100">
 				<div className="px-10 ">
 					<div className="p-4  rounded-lg dark:border-gray-700">
 						{renderMainSection()}

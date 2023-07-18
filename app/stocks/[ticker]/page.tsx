@@ -307,7 +307,7 @@ const renderNews = async (ticker: string) => {
 
 const renderMainSection = async (ticker: string) => {
 	return (
-		<div className="flex flex-col items-start text-center justify-top rounded bg-gray-50 min-h-screen dark:bg-gray-800 p-2 ">
+		<div className="flex flex-col items-start text-center justify-top rounded bg-base-100 min-h-screen dark:bg-gray-800 p-2 ">
 			<div className=" p-2 font-bold ">
 				<p className="text-center ">Overview</p>
 			</div>
@@ -334,7 +334,7 @@ export default async function Stock({ params: { ticker } }: Params) {
 		<>
 			{/* <TopNavbar /> */}
 
-			<div className="min-h-screen bg-gray-50  ">
+			<div className="min-h-screen bg-base-100  ">
 				<div className="px-10 ">
 					<div className="p-4 ">
 						<div className="flex flex-col  items-start justify-center rounded  min-h-28 dark:bg-gray-800 p-2 ">

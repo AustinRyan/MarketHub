@@ -72,7 +72,7 @@ export default function TopNavbar() {
 								))
 							) : (
 								<li>
-									<a>No items in watchlist</a>
+									<a>No items in watchlist.</a>
 								</li>
 							)}
 						</ul>

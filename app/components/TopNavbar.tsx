@@ -3,12 +3,15 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import Search from "./Search";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
+import SideNavbar from "./SideNavbar";
+
 interface Stock {
 	ticker: string;
 	stockFullName: string;
 }
 export default function TopNavbar() {
+	const [isSideNavbarOpen, setIsSideNavbarOpen] = useState(false);
 	const [search, setSearch] = useState(" ");
 	const handleSearch = (value: string) => {
 		setSearch(value);
@@ -33,10 +36,12 @@ export default function TopNavbar() {
 			}
 		}, 2000);
 
-		return () => clearInterval(interval); // cleanup on unmount
+		return () => clearInterval(interval);
 	}, [session]);
 
 	return (
+
+
 		<div className="navbar bg-base-200 flex justify-center ">
 			<div className="navbar-start">
 				{session?.status !== "authenticated" && (
@@ -98,8 +103,8 @@ export default function TopNavbar() {
 					/>
 				</div> */}
 				<Search isNav={true} />
+
 			</div>
-			<div className="md:hidden flex-grow"></div>{" "}
-		</div>
+		</>
 	);
 }

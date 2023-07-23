@@ -23,7 +23,7 @@ export default function RootLayout({
 			data-theme="dark"
 		>
 			<body className={inter.className}>
-				<div className=""></div>
+				<div className="max-w-screen-lg max-h-screen"></div>
 				<Provider>
 					<ToasterContext />
 					<TopNavbar />

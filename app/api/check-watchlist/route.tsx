@@ -1,6 +1,5 @@
 import prisma from "../../../lib/prismadb";
 import { NextResponse } from "next/server";
-
 export async function GET(request: Request) {
 	try {
 		const email = request.headers.get("User-Email");
@@ -10,11 +9,20 @@ export async function GET(request: Request) {
 			return new NextResponse("Missing email or ticker", { status: 400 });
 		}
 
+		// Fetch the user from the database
+		const user = await prisma.user.findUnique({
+			where: { email: email },
+		});
+
+		if (!user) {
+			return new NextResponse("User not found", { status: 404 });
+		}
+
 		// Check if the user's watchlist contains the stock.
 		const inWatchlist =
 			(await prisma.stock.findFirst({
 				where: {
-					email: email,
+					userId: user.id,
 					ticker: ticker,
 				},
 			})) !== null;

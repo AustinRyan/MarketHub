@@ -3,11 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import Search from "./Search";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
+
 interface Stock {
 	ticker: string;
 	stockFullName: string;
 }
+
 export default function TopNavbar() {
 	const [search, setSearch] = useState(" ");
 	const handleSearch = (value: string) => {
@@ -63,7 +65,6 @@ export default function TopNavbar() {
 							tabIndex={0}
 							className="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4 "
 						>
-							{}
 							{stocks.length > 0 ? (
 								stocks?.map((stock, index) => (
 									<li key={index}>
@@ -88,16 +89,15 @@ export default function TopNavbar() {
 				</Link>
 			</div>
 			<div className="navbar-end">
-				{/* <div className="form-control ">
-					<input
-						type="text"
-						placeholder="Search"
-						className="input input-bordered w-full md:w-auto" // full width on mobile, auto width on monitors and laptops
-						onChange={(e) => handleSearch(e.target.value)}
-						value={search}
-					/>
-				</div> */}
 				<Search isNav={true} />
+				{session?.status === "authenticated" && (
+					<button
+						className="btn btn-ghost rounded-btn"
+						onClick={() => signOut()}
+					>
+						Logout
+					</button>
+				)}
 			</div>
 			<div className="md:hidden flex-grow"></div>{" "}
 		</div>

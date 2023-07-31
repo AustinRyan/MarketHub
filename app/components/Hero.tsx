@@ -116,7 +116,7 @@ export default async function Hero() {
 						Top Gainers 🔥
 					</p>
 					<div className=" w-full">{await renderTables(gainer, false)}</div>
-					<hr className="border-t  w-screen border-gray-500" />
+					<hr className="border-t w-full border-gray-500" />
 				</div>
 
 				<div className="flex flex-col items-center justify-center rounded bg-base-100 min-h-28 dark:bg-gray-800 p-2">
@@ -125,10 +125,10 @@ export default async function Hero() {
 					</p>
 
 					<div className=" w-full">{await renderTables(loser, true)}</div>
-					<hr className="border-t  w-screen border-gray-500" />
+					<hr className="border-t w-full border-gray-500" />
 				</div>
 
-				<div className="flex justify-center rounded bg-base-100 h-60 dark:bg-gray-800 flex-grow min-h-screen  overflow-y-auto">
+				<div className="flex justify-center rounded bg-base-100 h-60 dark:bg-gray-800 flex-grow min-h-screen  ">
 					<div className="w-full ">
 						<p className="text-2xl font-bold font-mono text-gray-500 mb-2  text-center p-2">
 							Market News
@@ -137,7 +137,7 @@ export default async function Hero() {
 					</div>
 				</div>
 
-				<div className="flex justify-center rounded bg-base-100 h-60 dark:bg-gray-800 flex-grow min-h-screen  overflow-y-auto">
+				<div className="flex justify-center rounded bg-base-100 h-60 dark:bg-gray-800 flex-grow min-h-screen">
 					<div className="w-full">
 						<p className="text-2xl font-bold font-mono text-gray-500 mb-2  text-center p-2">
 							Crypto News
@@ -148,6 +148,7 @@ export default async function Hero() {
 			</div>
 		);
 	}
+
 	async function renderCryptoNews() {
 		const _cryptoNews = getCryptoNews();
 		const cryptoNews = await _cryptoNews;

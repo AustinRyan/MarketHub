@@ -1,7 +1,7 @@
 import Bottleneck from "bottleneck";
 
 const limiter = new Bottleneck({
-	minTime: 100,
+	minTime: 1000,
 });
 
 export default async function getStockSummary(ticker: string) {

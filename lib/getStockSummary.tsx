@@ -1,22 +1,18 @@
-import Bottleneck from "bottleneck";
-
-const limiter = new Bottleneck({
-	minTime: 1000, // Adjust this value according to the API's rate limit
-});
+import limiter from "./apiLimiter";
 
 const cache: any = {};
 
 export default async function getStockSummary(ticker: string) {
-	const cachedData = cache[ticker];
 	const currentTime = Date.now();
+	const cachedData = cache[ticker];
 
-	// Serve cached data if available and not expired
+	// Serve cached data if available and not expired manually
 	if (cachedData && currentTime - cachedData.timestamp < 60 * 1000) {
 		return cachedData.data;
 	}
 
 	try {
-		return limiter.schedule(() => {
+		return await limiter.schedule(async () => {
 			let rapidApiKey = process.env.NEXT_PUBLIC_RAPID_API_KEY;
 			if (!rapidApiKey) {
 				throw new Error("Missing RAPIDAPI_KEY environment variable");
@@ -40,18 +36,22 @@ export default async function getStockSummary(ticker: string) {
 
 			const url = `https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock/v2/get-summary?symbol=${ticker}&region=US`;
 
-			return fetch(url, options).then((res) => {
-				if (!res.ok) throw new Error(res.statusText);
-				return res.json().then((data) => {
-					// Store the fetched data in the cache with a timestamp
-					cache[ticker] = { data, timestamp: currentTime };
-					return data;
-				});
-			});
+			const res = await fetch(url, options);
+
+			if (!res.ok)
+				throw new Error(
+					`Failed to fetch stock summary for ${ticker}. Status: ${res.status}`
+				);
+
+			const data = await res.json();
+
+			// Store the fetched data in the cache with a timestamp
+			cache[ticker] = { data, timestamp: currentTime };
+
+			return data;
 		});
 	} catch (error) {
-		// Handle the error, possibly by logging it and rethrowing it
-		console.error("Error fetching stock summary", error);
+		console.error(`Error fetching stock summary for ${ticker}:`, error);
 		throw error;
 	}
 }

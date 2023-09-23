@@ -2,7 +2,7 @@ import limiter from "./apiLimiter";
 
 const cache: any = {};
 
-export default async function getStockSummary(ticker: string) {
+export default async function getStockSummary(ticker: string): Promise<any> {
 	const currentTime = Date.now();
 	const cachedData = cache[ticker];
 

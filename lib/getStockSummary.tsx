@@ -2,12 +2,15 @@ import limiter from "./apiLimiter";
 
 const cache: any = {};
 
-export default async function getStockSummary(ticker: string) {
+export default async function getStockSummary(ticker: string): Promise<any> {
 	const currentTime = Date.now();
 	const cachedData = cache[ticker];
 
-	// Serve cached data if available and not expired manually
+	// If data is in cache and not expired, return cached data
 	if (cachedData && currentTime - cachedData.timestamp < 60 * 1000) {
+		console.log(
+			`Cache hit for ${ticker} at ${new Date(currentTime).toISOString()}`
+		);
 		return cachedData.data;
 	}
 
@@ -20,17 +23,10 @@ export default async function getStockSummary(ticker: string) {
 
 			const options = {
 				method: "GET",
-				params: {
-					symbol: ticker,
-					region: "US",
-				},
 				headers: {
 					"content-type": "application/json",
 					"X-RapidAPI-Key": rapidApiKey,
 					"X-RapidAPI-Host": "apidojo-yahoo-finance-v1.p.rapidapi.com",
-				},
-				next: {
-					revalidate: 60,
 				},
 			};
 
@@ -38,16 +34,27 @@ export default async function getStockSummary(ticker: string) {
 
 			const res = await fetch(url, options);
 
-			if (!res.ok)
+			console.log(
+				`API call for ${ticker} at ${new Date(currentTime).toISOString()}`
+			);
+
+			if (res.status === 429) {
+				// Implement retry logic with exponential backoff
+				console.warn("429 error, retrying with backoff...");
+				await new Promise((res) => setTimeout(res, 2000)); // Example: wait for 2 seconds before retrying
+				return getStockSummary(ticker); // Retry the same function
+			}
+
+			if (!res.ok) {
 				throw new Error(
 					`Failed to fetch stock summary for ${ticker}. Status: ${res.status}`
 				);
+			}
 
 			const data = await res.json();
 
 			// Store the fetched data in the cache with a timestamp
 			cache[ticker] = { data, timestamp: currentTime };
-
 			return data;
 		});
 	} catch (error) {

@@ -20,7 +20,7 @@ function BugNotification() {
 									<div className="ml-3 w-0 flex-1">
 										<p className="text-sm leading-5 font-medium">
 											{
-												'Due API rate limits, you may experience some delays or "Too Many Requests" errors when navigating to a stock page. I am actively working on a solution. If you run into this error please try again in a few minutes.'
+												"Heads Up! Due to API rate limits and costs, I'm using the free plan for the Yahoo Finance API, which may reach its limit, resulting in occasional data update restrictions. Thank you for your understanding!"
 											}
 										</p>
 									</div>

@@ -60,13 +60,12 @@ type CryptoNewsResponse = {
 };
 const gainersData: Promise<Mover[]> = getGainers();
 const losersData: Promise<Mover[]> = getLosers();
-const [gainers, losers] = await Promise.all([gainersData, losersData]);
 
-const _trending = getTrendingTickers();
-const trending = await _trending;
-//take the first 5 trending tickers
-const trendingTickers = trending.finance.result[0].quotes.slice(0, 5);
-const renderMainSection = () => {
+const renderMainSection = async () => {
+	const _trending = getTrendingTickers();
+	const trending = await _trending;
+	//take the first 5 trending tickers
+	const trendingTickers = trending.finance.result[0].quotes.slice(0, 5);
 	return (
 		<div className="grid grid-col gap-4 mb-4 min-h-1/2">
 			<div className="flex items-center justify-center rounded bg-base-100 ">
@@ -261,6 +260,8 @@ async function renderNews() {
 	);
 }
 export default async function Hero() {
+	const [gainers, losers] = await Promise.all([gainersData, losersData]);
+
 	return (
 		<>
 			<BugNotification />
